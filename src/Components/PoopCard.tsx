@@ -14,6 +14,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { ParsedUserPost, UserPostInterface } from "./UserPost";
+import { parseISO, format } from "date-fns";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -30,15 +32,27 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function PoopCard() {
-  const [expanded, setExpanded] = React.useState(false);
+function formatDate(postDate: string) {
+  let dateStr = postDate;
+  // console.log(dateStr);
+  let date = parseISO(dateStr);
+  // console.log(date);
+  let formattedDate = format(date, "EEEE dd MMM yyyy");
+  return formattedDate;
+}
 
+export default function PoopCard({ post }: { post: ParsedUserPost }) {
+  const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  // if (!post) {
+  //   return null;
+  // }
   return (
     <Card sx={{ maxWidth: 345, marginTop: 3 }}>
+      {/* {JSON.parse(UserPost)} */}
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: orange[500] }}>S</Avatar>}
         action={
@@ -46,18 +60,18 @@ export default function PoopCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shaf's Monday Morning Turd"
-        subheader="15:37, Wed 24 January, 2024"
+        title={post.title}
+        subheader={formatDate(post.date)}
       />
       <CardMedia
         component="img"
         height="194"
-        image="https://i.redd.it/bl8mslkwoxt61.jpg"
+        src={post.picture}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This shit fucked me up good ngl
+          View message
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -78,25 +92,7 @@ export default function PoopCard() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then
-            serve.
-          </Typography>
+          <Typography paragraph>{post.description}</Typography>
         </CardContent>
       </Collapse>
     </Card>

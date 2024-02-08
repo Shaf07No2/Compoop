@@ -1,6 +1,8 @@
 import PoopCard from "./PoopCard";
 import Stack from "@mui/material/Stack";
 import Slide from "@mui/material/Slide";
+import { imageSources } from "../cardPhotoSources";
+import UserPost from "./UserPost";
 
 function PoopCardFeed() {
   return (
@@ -12,9 +14,7 @@ function PoopCardFeed() {
         justifyContent="center"
         alignItems="center"
       >
-        <PoopCard />
-        <PoopCard />
-        <PoopCard />
+        <UserPost></UserPost>
       </Stack>
     </Slide>
   );

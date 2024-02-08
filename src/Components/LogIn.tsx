@@ -12,11 +12,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { AuthContext } from "./AuthContext";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Grow from "@mui/material/Grow";
+import Cookies from "js-cookie";
+import { decodeJwt as JWT } from "jose";
 
 function Copyright(props: any) {
   return (
@@ -44,11 +46,11 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const [checked] = React.useState(true);
 
-  const authContext = useContext(AuthContext);
-  if (!authContext) {
-    throw new Error("auth context undefined");
-  }
-  const { setAuthenticated } = useContext(AuthContext)!;
+  const authContext = React.useContext(AuthContext);
+
+  if (!authContext) throw new Error("AuthContext not found");
+
+  const { setAuth } = authContext;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,9 +65,27 @@ export default function LogIn() {
         data: formData,
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
-      setAuthenticated(true);
-      history.push("/Poopfeed");
+
+      const header = response.headers;
+      let token;
+
+      if (header instanceof AxiosHeaders) {
+        token = header.get("Authorization") as string;
+      }
+      console.log(token);
+
+      if (token) {
+        Cookies.set("auth", token, { expires: new Date(2147483647000) });
+        localStorage.setItem(email, email);
+        let claims = JWT("claim= " + token);
+        let userId: any;
+        claims && "userId" in claims
+          ? (userId = claims.userId)
+          : console.log("UserID not found");
+        localStorage.setItem("userId", userId);
+        setAuth(true);
+        history.push("/poopfeed");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -151,7 +171,7 @@ export default function LogIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href={"/signup"} variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import Cookies from "js-cookie";
+import { AuthContext } from "./AuthContext";
 
 type SomeComponentProps = RouteComponentProps;
 const SignUp: FC<SomeComponentProps> = ({ history }) => {
@@ -14,19 +16,64 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
     reset,
     formState: { errors },
   } = useForm();
-  const submitData = (data: any) => {
+
+  const authContext = React.useContext(AuthContext);
+
+  if (!authContext) throw new Error("AuthContext not found");
+
+  const { setAuth } = authContext;
+
+  const submitData = async (data: any) => {
     let params = {
-      firstname: data.firstname,
-      lastname: data.lastname,
+      firstName: data.firstName,
+      lastName: data.lastName,
       email: data.email,
       password: data.password,
-      confirmpassword: data.cpassword,
+      userName: data.userName,
     };
-    console.log(data);
-    axios
-      .post("http://localhost:4000/api/signup", params)
-      .then(function (response) {
-        toast.success(response.data.message, {
+    console.log(params);
+    if (data.password === data.cpassword) {
+      console.log("matching passwords");
+    }
+
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:8008/signup",
+        data: params,
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response);
+      toast.success(response.data.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: 0,
+        toastId: "my_toast",
+      });
+      const header = response.headers;
+      let token;
+
+      if (header instanceof AxiosHeaders) {
+        token = header.get("Authorization") as string;
+      }
+      console.log(token);
+      if (token) {
+        Cookies.set("auth", token, { expires: new Date(2147483647000) });
+        localStorage.setItem(params.email, params.email);
+        setAuth(true);
+        reset();
+        setTimeout(() => {
+          history.push("/poopfeed");
+        }, 1000);
+      }
+    } catch (error: any) {
+      console.error(error);
+      if (error.response && error.response.status === 409) {
+        toast.error("Account with email/username already exists.", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -36,15 +83,8 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
           progress: 0,
           toastId: "my_toast",
         });
-        reset();
-        setTimeout(() => {
-          history.push("/login");
-        }, 3000);
-      })
-
-      .catch(function (error) {
-        console.log(error);
-      });
+      }
+    }
   };
   return (
     <>
@@ -71,13 +111,13 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                         type="text"
                         className="form-control form-control-sm"
                         id="exampleFormControlInput1"
-                        {...register("firstname", {
+                        {...register("firstName", {
                           required: "Firstname is required!",
                         })}
                       />
-                      {errors.firstname && (
+                      {errors.firstName && (
                         <p className="text-danger" style={{ fontSize: 14 }}>
-                          {errors.firstname.message?.toString()}
+                          {errors.firstName.message?.toString()}
                         </p>
                       )}
                     </div>
@@ -89,13 +129,13 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                         type="text"
                         className="form-control form-control-sm"
                         id="exampleFormControlInput2"
-                        {...register("lastname", {
+                        {...register("lastName", {
                           required: "Lastname is required!",
                         })}
                       />
-                      {errors.lastname && (
+                      {errors.lastName && (
                         <p className="text-danger" style={{ fontSize: 14 }}>
-                          {errors.lastname.message?.toString()}
+                          {errors.lastName.message?.toString()}
                         </p>
                       )}
                     </div>
@@ -112,6 +152,22 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                     {errors.email && (
                       <p className="text-danger" style={{ fontSize: 14 }}>
                         {errors.email.message?.toString()}
+                      </p>
+                    )}
+                  </div>
+                  <div className="">
+                    <label className="form-label">Username</label>
+                    <input
+                      type="userName"
+                      className="form-control form-control-sm"
+                      id="exampleFormControlInput3"
+                      {...register("userName", {
+                        required: "Username is required!",
+                      })}
+                    />
+                    {errors.userName && (
+                      <p className="text-danger" style={{ fontSize: 14 }}>
+                        {errors.userName.message?.toString()}
                       </p>
                     )}
                   </div>

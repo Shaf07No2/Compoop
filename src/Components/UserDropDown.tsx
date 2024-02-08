@@ -8,7 +8,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
-import { useContext } from "react";
+import Cookies from "js-cookie";
+// import { useContext } from "react";
 
 let settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -17,11 +18,11 @@ function UserDropDown() {
     null
   );
 
-  const authContext = useContext(AuthContext);
-  if (!authContext) {
-    throw new Error("auth context undefined");
-  }
-  let { setAuthenticated } = authContext;
+  const authContext = React.useContext(AuthContext);
+
+  if (!authContext) throw new Error("AuthContext not found");
+
+  const { isAuthenticated, setAuth } = authContext;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -33,7 +34,9 @@ function UserDropDown() {
   const handleCloseUserMenu = (MenuItem: string) => {
     setAnchorElUser(null);
     if (MenuItem === "Logout") {
-      setAuthenticated(false);
+      // const email = localStorage.getItem("email");
+      Cookies.remove("auth");
+      setAuth(false);
       history.push("/login");
     }
   };
@@ -69,7 +72,7 @@ function UserDropDown() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {authContext.isAuthenticated ? (
+        {isAuthenticated ? (
           settings.map((setting) => (
             <MenuItem
               key={setting}

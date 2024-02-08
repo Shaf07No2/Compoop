@@ -1,30 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import Cookies from "js-cookie";
 
 interface PrivateRouteProps extends RouteProps {
-  component: React.ComponentType<any>;
+  component: any;
 }
 
-function PrivateRoute({ component: Component, ...rest }: PrivateRouteProps) {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  component: Component,
+  ...rest
+}) => {
   const authContext = useContext(AuthContext);
 
-  if (!authContext) {
-    throw new Error(
-      "useContext(AuthContext) is undefined, did you forget to wrap your component in <AuthContext.Provider>?"
-    );
-  }
+  if (!authContext) throw new Error("AuthContext not found");
 
-  const { isAuthenticated } = authContext;
+  const { setAuth, isAuthenticated } = authContext;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const jwt = Cookies.get("auth");
+    if (jwt) {
+      setAuth(true);
+    }
+    setIsLoading(false);
+  }, [setAuth]);
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        // isAuthenticated ? <Redirect to="/login" /> : <Component {...props} />
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+        isLoading ? (
+          <div> Loading... </div>
+        ) : isAuthenticated ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        )
       }
     />
   );
-}
+};
 
 export default PrivateRoute;
