@@ -5,7 +5,8 @@ import axios, { AxiosHeaders } from "axios";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Cookies from "js-cookie";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../Security/AuthContext";
+import { decodeJwt as JWT } from "jose";
 
 type SomeComponentProps = RouteComponentProps;
 const SignUp: FC<SomeComponentProps> = ({ history }) => {
@@ -64,6 +65,12 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       if (token) {
         Cookies.set("auth", token, { expires: new Date(2147483647000) });
         localStorage.setItem(params.email, params.email);
+        let claims = JWT("claim= " + token);
+        let userId: any;
+        claims && "userId" in claims
+          ? (userId = claims.userId)
+          : console.log("UserID not found");
+        localStorage.setItem("userId", userId);
         setAuth(true);
         reset();
         setTimeout(() => {

@@ -14,7 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { ParsedUserPost, UserPostInterface } from "./UserPost";
+import { ParsedUserPost } from "../Posting/GetPost";
 import { parseISO, format } from "date-fns";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -34,9 +34,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 function formatDate(postDate: string) {
   let dateStr = postDate;
-  // console.log(dateStr);
   let date = parseISO(dateStr);
-  // console.log(date);
   let formattedDate = format(date, "EEEE dd MMM yyyy");
   return formattedDate;
 }
@@ -52,7 +50,6 @@ export default function PoopCard({ post }: { post: ParsedUserPost }) {
   // }
   return (
     <Card sx={{ maxWidth: 345, marginTop: 3 }}>
-      {/* {JSON.parse(UserPost)} */}
       <CardHeader
         avatar={<Avatar sx={{ bgcolor: orange[500] }}>S</Avatar>}
         action={
@@ -69,11 +66,7 @@ export default function PoopCard({ post }: { post: ParsedUserPost }) {
         src={post.picture}
         alt="Paella dish"
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          View message
-        </Typography>
-      </CardContent>
+
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />

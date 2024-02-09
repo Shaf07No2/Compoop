@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../Security/AuthContext";
 import Cookies from "js-cookie";
 // import { useContext } from "react";
 

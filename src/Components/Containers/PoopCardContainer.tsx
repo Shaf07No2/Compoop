@@ -1,10 +1,8 @@
-import PoopCard from "./PoopCard";
 import Stack from "@mui/material/Stack";
 import Slide from "@mui/material/Slide";
-import { imageSources } from "../cardPhotoSources";
-import UserPost from "./UserPost";
+import UserPost from "../Posting/GetPost";
 
-function PoopCardFeed() {
+function PoopCardContainer() {
   return (
     <Slide direction="up" in={true} mountOnEnter unmountOnExit>
       <Stack
@@ -19,4 +17,4 @@ function PoopCardFeed() {
     </Slide>
   );
 }
-export default PoopCardFeed;
+export default PoopCardContainer;

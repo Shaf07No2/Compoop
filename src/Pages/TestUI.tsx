@@ -1,10 +1,6 @@
-import PoopCardFeed from "../Components/PoopCardFeed";
+import PoopCardFeed from "../Components/Containers/PoopCardContainer";
 
 function TestUI() {
-  return (
-    <div>
-      <PoopCardFeed />
-    </div>
-  );
+  return <div>{/* <PoopCardFeed /> */}</div>;
 }
 export default TestUI;

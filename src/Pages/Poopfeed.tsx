@@ -1,4 +1,4 @@
-import PoopCardFeed from "../Components/PoopCardFeed";
+import PoopCardFeed from "../Components/Containers/PoopCardContainer";
 
 function Poopfeed() {
   return (

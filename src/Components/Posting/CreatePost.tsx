@@ -43,7 +43,6 @@ const CreatePost: React.FC = () => {
 
   const submitPost = React.useCallback(async () => {
     try {
-      // console.log(token?.trim());
       console.log("fetchProfile is being called");
       const response = await axios({
         method: "post",
@@ -55,10 +54,11 @@ const CreatePost: React.FC = () => {
         },
         withCredentials: true,
       });
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
-  }, [postData]);
+  }, [postData, token]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

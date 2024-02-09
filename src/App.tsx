@@ -1,22 +1,23 @@
 // import React, { useState } from "react";
 import "./App.css";
-import NavBar from "./Components/Navbar";
+import NavBar from "./Components/Fixed/Navbar";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import PrivateRoute from "./Components/privateRoute";
-import LogIn from "./Components/LogIn";
-import AuthContextProvider from "./Components/AuthContext";
+import PrivateRoute from "./Components/Security/privateRoute";
+import LogIn from "./Components/SigningInOut/LogIn";
+import AuthContextProvider from "./Components/Security/AuthContext";
 import Poopfeed from "./Pages/Poopfeed";
-import SignUp from "./Components/Signup";
-import Background from "./Components/background";
+import SignUp from "./Components/SigningInOut/Signup";
+import Background from "./Components/Fixed/background";
 import About from "./Pages/About";
 import ComPoop from "./Pages/Compoop";
-import ProfileCard from "./Components/ProfileCard";
-import ProfilePage from "./Pages/ProfilePage";
+import ProfileCard from "./Components/ProfileCardpossiblyunused";
+import ProfilePage from "./Components/GetProfile";
 import TestUI from "./Pages/TestUI";
-import CreatePost from "./Components/CreatePost";
+import CreatePost from "./Components/Posting/CreatePost";
+// import MyPosts from "./Pages/MyPosts";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <Background />
-          {/* <CreatePost /> */}
+
           <Switch>
             <PrivateRoute path="/home" component={Home} />
             <PrivateRoute path="/compoop" component={ComPoop} />
