@@ -17,32 +17,35 @@ import ProfileCard from "./Components/ProfileCardpossiblyunused";
 import ProfilePage from "./Components/GetProfile";
 import TestUI from "./Pages/TestUI";
 import CreatePost from "./Components/Posting/CreatePost";
-// import MyPosts from "./Pages/MyPosts";
+import ProfilePicProvider from "./Components/Fixed/ProfilePicProvider";
 
 function App() {
   return (
     <>
       <AuthContextProvider>
-        <BrowserRouter>
-          <NavBar />
-          <Background />
+        <ProfilePicProvider>
+          <BrowserRouter>
+            <NavBar />
+            <Background />
+            {/* <TestUI /> */}
 
-          <Switch>
-            <PrivateRoute path="/home" component={Home} />
-            <PrivateRoute path="/compoop" component={ComPoop} />
-            <PrivateRoute path="/create" component={CreatePost} />
-            <PrivateRoute path="/poopfeed" component={Poopfeed} />
-            <PrivateRoute path="/register" component={SignUp} />
-            <PrivateRoute path="/profile/:username" component={ProfileCard} />
-            <PrivateRoute path="/profile" component={ProfilePage} />
+            <Switch>
+              <PrivateRoute path="/home" component={Home} />
+              <PrivateRoute path="/compoop" component={ComPoop} />
+              <PrivateRoute path="/create" component={CreatePost} />
+              <PrivateRoute path="/poopfeed" component={Poopfeed} />
+              <PrivateRoute path="/register" component={SignUp} />
+              <PrivateRoute path="/profile/:username" component={ProfileCard} />
+              <PrivateRoute path="/profile" component={ProfilePage} />
 
-            <Route path="/login" component={LogIn} />
-            <Route path="/about" component={About} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/testui" component={TestUI} />
-            <Redirect from="/" to="/Login" />
-          </Switch>
-        </BrowserRouter>
+              <Route path="/login" component={LogIn} />
+              <Route path="/about" component={About} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/testui" component={TestUI} />
+              <Redirect from="/" to="/Login" />
+            </Switch>
+          </BrowserRouter>
+        </ProfilePicProvider>
       </AuthContextProvider>
     </>
   );

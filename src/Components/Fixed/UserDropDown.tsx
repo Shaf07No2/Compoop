@@ -9,14 +9,17 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../Security/AuthContext";
 import Cookies from "js-cookie";
+// import { ProfilePicContext } from "./ProfilePicProvider";
 // import { useContext } from "react";
 
 let settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function UserDropDown() {
+function UserDropDown({ profilePic }: any) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  // console.log("userDrop down profile pic= " + profilePic);
+  // const { clearProfilePic } = React.useContext(ProfilePicContext);
 
   const authContext = React.useContext(AuthContext);
 
@@ -34,9 +37,8 @@ function UserDropDown() {
   const handleCloseUserMenu = (MenuItem: string) => {
     setAnchorElUser(null);
     if (MenuItem === "Logout") {
-      // const email = localStorage.getItem("email");
-      Cookies.remove("auth");
-      setAuth(false);
+      authContext.logout();
+
       history.push("/login");
     }
   };
@@ -49,10 +51,7 @@ function UserDropDown() {
           <div></div>
         ) : (
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar
-              alt="user"
-              src="https://i1.sndcdn.com/avatars-000228475181-h5qa55-t500x500.jpg"
-            />
+            <Avatar alt="user" src={profilePic} />
           </IconButton>
         )}
       </Tooltip>

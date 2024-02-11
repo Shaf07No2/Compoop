@@ -1,9 +1,10 @@
+import PoopCardContainer from "../Components/Containers/PoopCardContainer";
 import PoopCardFeed from "../Components/Containers/PoopCardContainer";
 
 function Poopfeed() {
   return (
     <div>
-      <PoopCardFeed />
+      <PoopCardContainer postPath="home" />
     </div>
   );
 }

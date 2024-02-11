@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import Grow from "@mui/material/Grow";
 import Cookies from "js-cookie";
 import { decodeJwt as JWT } from "jose";
+import { ProfilePicContext } from "../Fixed/ProfilePicProvider";
 
 function Copyright(props: any) {
   return (
@@ -47,11 +48,11 @@ export default function LogIn() {
   const [checked] = React.useState(true);
 
   const authContext = React.useContext(AuthContext);
+  const { clearProfilePic } = React.useContext(ProfilePicContext);
 
   if (!authContext) throw new Error("AuthContext not found");
 
   const { setAuth } = authContext;
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData();
@@ -72,7 +73,6 @@ export default function LogIn() {
       if (header instanceof AxiosHeaders) {
         token = header.get("Authorization") as string;
       }
-      console.log(token);
 
       if (token) {
         Cookies.set("auth", token, { expires: new Date(2147483647000) });
@@ -86,6 +86,7 @@ export default function LogIn() {
         setAuth(true);
         history.push("/poopfeed");
       }
+      clearProfilePic();
     } catch (error) {
       console.error(error);
     }

@@ -31,6 +31,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       email: data.email,
       password: data.password,
       userName: data.userName,
+      profilePic: data.profilePic,
     };
     console.log(params);
     if (data.password === data.cpassword) {
@@ -213,6 +214,19 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
                         {errors.cpassword.message?.toString()}
                       </p>
                     )}
+                  </div>
+                  <div>
+                    <label className="form-label">
+                      Paste your profile image link
+                    </label>
+                    <input
+                      type="profilePic"
+                      className="form-control form-control-sm"
+                      id="exampleFormControlInput7"
+                      {...register("profilePic", {
+                        required: "Profile image is required",
+                      })}
+                    />
                   </div>
                   <div className="text-center mt-4 ">
                     <button

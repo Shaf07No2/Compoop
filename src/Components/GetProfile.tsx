@@ -12,6 +12,7 @@ interface ProfileData {
   email: string;
   password: string;
   userName: string;
+  profilePic: string;
   role: string;
 }
 
@@ -21,12 +22,10 @@ export default function GetProfile() {
 
   const fetchProfile = useCallback(async () => {
     try {
-      // console.log(token?.trim());
-      console.log("fetchProfile is being called");
       const response = await axios({
         method: "post",
         url: "http://localhost:8008/profile",
-        // data: user,
+
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
@@ -42,7 +41,7 @@ export default function GetProfile() {
   }, [token]);
 
   useEffect(() => {
-    console.log("useEffect is running");
+    // console.log("useEffect is running");
     fetchProfile();
   }, [fetchProfile]);
 

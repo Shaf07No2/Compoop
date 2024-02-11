@@ -51,7 +51,7 @@ export default function PoopCard({ post }: { post: ParsedUserPost }) {
   return (
     <Card sx={{ maxWidth: 345, marginTop: 3 }}>
       <CardHeader
-        avatar={<Avatar sx={{ bgcolor: orange[500] }}>S</Avatar>}
+        avatar={<Avatar src={post.profilePic} sx={{ bgcolor: orange[500] }} />}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -64,7 +64,7 @@ export default function PoopCard({ post }: { post: ParsedUserPost }) {
         component="img"
         height="194"
         src={post.picture}
-        alt="Paella dish"
+        alt={post.picture}
       />
 
       <CardActions disableSpacing>

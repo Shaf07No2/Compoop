@@ -13,7 +13,8 @@ import {
 import Slide from "@mui/material/Slide";
 import UserPost from "../Components/Posting/GetPost";
 import PoopCard from "../Components/Cards/PoopCard";
-import PoopCardFeed from "../Components/Containers/PoopCardContainer";
+import PoopCardFeed from "../Components/Containers/PoopCardContainer"; // pathPropType,
+import PoopCardContainer from "../Components/Containers/PoopCardContainer";
 
 export default function ProfilePage({ userProfile }: any) {
   return (
@@ -41,11 +42,11 @@ export default function ProfilePage({ userProfile }: any) {
                     style={{ width: "150px" }}
                   >
                     <MDBCardImage
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                      src={userProfile!.profilePic}
                       alt="Generic placeholder image"
                       className="mt-4 mb-2 img-thumbnail"
                       fluid
-                      style={{ width: "150px", zIndex: "1" }}
+                      // style={{ width: "150px", zIndex: "1" }}
                     />
                     <MDBBtn
                       outline
@@ -92,7 +93,7 @@ export default function ProfilePage({ userProfile }: any) {
                 <MDBCardBody className="text-black p-4">
                   <MDBRow>
                     <MDBCol className="mb-2">
-                      <PoopCardFeed></PoopCardFeed>
+                      <PoopCardContainer postPath="user"></PoopCardContainer>
                     </MDBCol>
                   </MDBRow>
                   {/* <div className="mb-5">

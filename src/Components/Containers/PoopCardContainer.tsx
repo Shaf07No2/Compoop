@@ -1,8 +1,13 @@
 import Stack from "@mui/material/Stack";
 import Slide from "@mui/material/Slide";
 import UserPost from "../Posting/GetPost";
+import GetPost from "../Posting/GetPost";
 
-function PoopCardContainer() {
+export interface pathPropType {
+  postPath: string;
+}
+
+function PoopCardContainer({ postPath }: pathPropType) {
   return (
     <Slide direction="up" in={true} mountOnEnter unmountOnExit>
       <Stack
@@ -12,7 +17,7 @@ function PoopCardContainer() {
         justifyContent="center"
         alignItems="center"
       >
-        <UserPost></UserPost>
+        <GetPost postPath={postPath}></GetPost>
       </Stack>
     </Slide>
   );
