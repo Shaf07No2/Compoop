@@ -74,10 +74,16 @@ export function SearchResults({ results }: { results: SearchResultFormat[] }) {
     <>
       {results.map((result: SearchResultFormat, index) => (
         <Link
-          // to={`/users/${result.userId}`}
+          to={`/user/${result.id}`}
           key={index}
-          to={`/profile`}
+          // to={`/poopfeed`}
+          // to={`/compoop`}
           style={{ textDecoration: "none", color: "inherit" }}
+          onClick={(event: any) => {
+            alert("Link clicked!"); // This will show an alert when the link is clicked
+            console.log("Link clicked!");
+            event.stopPropagation();
+          }}
         >
           <Card sx={{ minWidth: 275, marginTop: 1 }}>
             <CardContent>
@@ -149,10 +155,10 @@ export default function SearchComponent() {
   const handleSearch = (event: any) => {
     const { value: nextValue } = event.target;
     debouncedSave(nextValue);
-    // setSearchTerm(nextValue);
+
     if (nextValue) {
       handlePopoverOpen(event);
-      // setAnchorEl(event.currentTarget);
+      setAnchorEl(event.currentTarget);
     } else {
       handlePopoverClose();
     }

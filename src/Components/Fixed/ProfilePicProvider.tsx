@@ -37,7 +37,7 @@ export default function ProfilePicProvider({ children, setAuth }: any) {
       // console.log(JSON.stringify(response));
       // console.log(JSON.stringify(response.data));
       // console.log(response.data[0].profilePic);
-      console.log(response.data.profilePic);
+      // console.log(response.data.profilePic);
       setProfilePic(response.data.profilePic);
     } catch (error) {
       console.error(error);

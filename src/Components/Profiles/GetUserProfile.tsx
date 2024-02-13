@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import Profile from "../Pages/ProfilePage";
-import Loading from "./Animations/Loading";
-import ProfilePage from "../Pages/ProfilePage";
+import Profile from "../../Pages/ProfilePage";
+import Loading from "../Animations/Loading";
+import ProfilePage from "../../Pages/ProfilePage";
 
 interface ProfileData {
   id: number;
@@ -16,7 +16,7 @@ interface ProfileData {
   role: string;
 }
 
-export default function GetProfile() {
+export default function GetUserProfile() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const token = Cookies.get("auth");
 
@@ -45,15 +45,14 @@ export default function GetProfile() {
     fetchProfile();
   }, [fetchProfile]);
 
-  return (
-    <>
-      <div className="Pagefiller">
-        {profileData ? (
-          <ProfilePage userProfile={profileData}></ProfilePage>
-        ) : (
-          <Loading />
-        )}
-      </div>
-    </>
-  );
+  return profileData;
+  //   <>
+  //     <div className="Pagefiller">
+  //       {profileData ? (
+  //         <ProfilePage userProfile={profileData}></ProfilePage>
+  //       ) : (
+  //         <Loading />
+  //       )}
+  //     </div>
+  //   </>
 }

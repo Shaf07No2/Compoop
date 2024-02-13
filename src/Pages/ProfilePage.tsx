@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   MDBCol,
   MDBContainer,
@@ -15,8 +15,50 @@ import UserPost from "../Components/Posting/GetPost";
 import PoopCard from "../Components/Cards/PoopCard";
 import PoopCardFeed from "../Components/Containers/PoopCardContainer"; // pathPropType,
 import PoopCardContainer from "../Components/Containers/PoopCardContainer";
+import Cookies from "js-cookie";
+import axios from "axios";
 
-export default function ProfilePage({ userProfile }: any) {
+interface ProfileData {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  userName: string;
+  profilePic: string;
+  role: string;
+}
+
+export default function ProfilePage() {
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const token = Cookies.get("auth");
+
+  const postPath = "user";
+  const url = "http://localhost:8008/profile";
+
+  const fetchProfile = useCallback(async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: url,
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        withCredentials: true,
+      });
+
+      setProfileData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [token]);
+  console.log("profiledata log: " + profileData);
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
   return (
     <div
       className="gradient-custom-2"
@@ -42,7 +84,7 @@ export default function ProfilePage({ userProfile }: any) {
                     style={{ width: "150px" }}
                   >
                     <MDBCardImage
-                      src={userProfile!.profilePic}
+                      src={profileData?.profilePic}
                       alt="Generic placeholder image"
                       className="mt-4 mb-2 img-thumbnail"
                       fluid
@@ -58,10 +100,10 @@ export default function ProfilePage({ userProfile }: any) {
                   </div>
                   <div className="ms-3" style={{ marginTop: "130px" }}>
                     <MDBTypography tag="h5">
-                      {userProfile!.firstName} {userProfile!.lastName}
+                      {profileData?.firstName} {profileData?.lastName}
                     </MDBTypography>
                     <MDBCardText>
-                      {userProfile!.userName} / {userProfile!.email}
+                      {profileData?.userName} / {profileData?.email}
                     </MDBCardText>
                   </div>
                 </div>
@@ -93,7 +135,9 @@ export default function ProfilePage({ userProfile }: any) {
                 <MDBCardBody className="text-black p-4">
                   <MDBRow>
                     <MDBCol className="mb-2">
-                      <PoopCardContainer postPath="user"></PoopCardContainer>
+                      <PoopCardContainer
+                        postPath={postPath}
+                      ></PoopCardContainer>
                     </MDBCol>
                   </MDBRow>
                   {/* <div className="mb-5">

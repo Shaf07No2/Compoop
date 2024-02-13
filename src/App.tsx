@@ -13,11 +13,13 @@ import SignUp from "./Components/SigningInOut/Signup";
 import Background from "./Components/Fixed/background";
 import About from "./Pages/About";
 import ComPoop from "./Pages/Compoop";
-import ProfileCard from "./Components/ProfileCardpossiblyunused";
-import ProfilePage from "./Components/GetProfile";
+// import ProfileCard from "./Components/ProfileCardpossiblyunused";
+// import ProfilePage from "./Components/GetProfile";
 import TestUI from "./Pages/TestUI";
 import CreatePost from "./Components/Posting/CreatePost";
 import ProfilePicProvider from "./Components/Fixed/ProfilePicProvider";
+import ProfilePage from "./Pages/ProfilePage";
+import GetProfile from "./Components/Profiles/GetProfile";
 
 function App() {
   return (
@@ -35,7 +37,7 @@ function App() {
               <PrivateRoute path="/create" component={CreatePost} />
               <PrivateRoute path="/poopfeed" component={Poopfeed} />
               <PrivateRoute path="/register" component={SignUp} />
-              <PrivateRoute path="/profile/:username" component={ProfileCard} />
+              {/* <PrivateRoute path="/profile/:username" component={ProfileCard} /> */}
               <PrivateRoute path="/profile" component={ProfilePage} />
 
               <Route path="/login" component={LogIn} />
