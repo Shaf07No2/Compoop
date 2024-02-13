@@ -11,7 +11,7 @@ import { debounce } from "@mui/material/utils";
 
 import Popup from "reactjs-popup";
 import Avatar from "@mui/material/Avatar";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 interface SearchResultFormat {
@@ -70,20 +70,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export function SearchResults({ results }: { results: SearchResultFormat[] }) {
+  const history = useHistory();
+
+  const handleClick = (id: string) => {
+    // Perform your action here
+
+    // Then navigate to the new route
+    history.push(`/profile/${id}`);
+  };
   return (
     <>
-      {results.map((result: SearchResultFormat, index) => (
-        <Link
-          to={`/user/${result.id}`}
-          key={index}
-          // to={`/poopfeed`}
+      {results.map((result: SearchResultFormat) => (
+        <div
+          // to={`/profile/${result.id}`}
           // to={`/compoop`}
+          key={result.id}
           style={{ textDecoration: "none", color: "inherit" }}
-          onClick={(event: any) => {
-            alert("Link clicked!"); // This will show an alert when the link is clicked
-            console.log("Link clicked!");
-            event.stopPropagation();
-          }}
+          // onClick={(event: any) => {
+          //   event.preventDefault();
+          //   event.stopPropagation();
+          // }}
+          onClick={() => handleClick(`${result.id}`)}
         >
           <Card sx={{ minWidth: 275, marginTop: 1 }}>
             <CardContent>
@@ -99,7 +106,7 @@ export function SearchResults({ results }: { results: SearchResultFormat[] }) {
               </Typography> */}
             </CardContent>
           </Card>
-        </Link>
+        </div>
       ))}
     </>
   );
@@ -108,27 +115,51 @@ export function SearchResults({ results }: { results: SearchResultFormat[] }) {
 export function SearchBar({
   handleSearch,
   results,
+  isOpen,
+  setOpen,
 }: {
   handleSearch: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   results: SearchResultFormat[];
+  isOpen: boolean;
+  setOpen: (open: boolean) => void;
 }) {
+  const inputRef = React.useRef<HTMLInputElement>(null); // Create a ref
+  let blurTimeout: NodeJS.Timeout;
+  React.useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+      // Set focus to the input field when the popup is open
+    }
+  }, [isOpen]);
+
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <Popup
+        open={isOpen}
         trigger={
           <StyledInputBase
+            ref={inputRef} // Use the ref here
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
-            onChange={(event) => handleSearch(event)}
+            onChange={(event) => {
+              handleSearch(event);
+              setOpen(true); // Open the popup when there's input
+            }}
+            onFocus={() => {
+              // Clear the timeout when the input is focused
+              clearTimeout(blurTimeout);
+            }}
           />
         }
         position="bottom left"
-        on="focus"
+        closeOnDocumentClick
+        lockScroll
+        repositionOnResize
       >
         <SearchResults results={results} />
       </Popup>
@@ -137,18 +168,22 @@ export function SearchBar({
 }
 
 export default function SearchComponent() {
+  console.log("rerendering");
   const [input, setInput] = React.useState("");
   // const [searchTerm, setSearchTerm] = React.useState("");
   const [results, setResults] = React.useState<SearchResultFormat[]>([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const token = Cookies.get("auth");
 
   const handlePopoverOpen = (event: React.ChangeEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    setIsOpen(true);
   };
 
   const debouncedSave = React.useCallback(
-    debounce((nextValue: string) => setInput(nextValue), 500),
+    debounce((nextValue: string) => setInput(nextValue), 300),
     [input] // Will be created only once initially
   );
 
@@ -156,23 +191,9 @@ export default function SearchComponent() {
     const { value: nextValue } = event.target;
     debouncedSave(nextValue);
 
-    if (nextValue) {
+    if (nextValue && nextValue.trim() !== "") {
       handlePopoverOpen(event);
       setAnchorEl(event.currentTarget);
-    } else {
-      handlePopoverClose();
-    }
-  };
-
-  const inputRef = React.useRef<HTMLInputElement>(null); // Create a ref
-
-  const handlePopoverClose = () => {
-    // Only close the popover if there's no search input
-    if (!input) {
-      setAnchorEl(null);
-      if (inputRef.current) {
-        inputRef.current.focus(); // Return focus to the input field
-      }
     }
   };
 
@@ -208,11 +229,15 @@ export default function SearchComponent() {
           console.error("Error fetching data: ", error);
         });
     }
-  }, [input, token]);
+  }, [input, token, isOpen]);
   return (
     <>
-      <SearchBar handleSearch={handleSearch} results={results} />
-      {/* <SearchResults results={results} /> */}
+      <SearchBar
+        handleSearch={handleSearch}
+        results={results}
+        isOpen={isOpen}
+        setOpen={setIsOpen}
+      />
     </>
   );
 }

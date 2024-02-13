@@ -29,35 +29,39 @@ interface ProfileData {
   role: string;
 }
 
-export default function ProfilePage() {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const token = Cookies.get("auth");
+export default function ProfilePage({
+  profileData,
+}: {
+  profileData: ProfileData;
+}) {
+  // const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  // const token = Cookies.get("auth");
 
-  const postPath = "user";
-  const url = "http://localhost:8008/profile";
+  // const postPath = "user";
+  // const url = "http://localhost:8008/profile";
 
-  const fetchProfile = useCallback(async () => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: url,
+  // const fetchProfile = useCallback(async () => {
+  //   try {
+  //     const response = await axios({
+  //       method: "post",
+  //       url: url,
 
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        withCredentials: true,
-      });
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: token,
+  //       },
+  //       withCredentials: true,
+  //     });
 
-      setProfileData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [token]);
-  console.log("profiledata log: " + profileData);
-  useEffect(() => {
-    fetchProfile();
-  }, [fetchProfile]);
+  //     setProfileData(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [token]);
+  // console.log("profiledata log: " + profileData);
+  // useEffect(() => {
+  //   fetchProfile();
+  // }, [fetchProfile]);
 
   return (
     <div
@@ -135,9 +139,9 @@ export default function ProfilePage() {
                 <MDBCardBody className="text-black p-4">
                   <MDBRow>
                     <MDBCol className="mb-2">
-                      <PoopCardContainer
+                      {/* <PoopCardContainer
                         postPath={postPath}
-                      ></PoopCardContainer>
+                      ></PoopCardContainer> */}
                     </MDBCol>
                   </MDBRow>
                   {/* <div className="mb-5">

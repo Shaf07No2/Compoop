@@ -15,18 +15,9 @@ export default function ProfilePicProvider({ children, setAuth }: any) {
 
   const fetchProfile = React.useCallback(async () => {
     try {
-      // const response = await axios({
-      //   method: "get",
-      //   url: `http://localhost:8008/user/${userId}`,
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: token,
-      //   },
-      //   withCredentials: true,
-      // });
       const response = await axios({
         method: "post",
-        url: "http://localhost:8008/profile",
+        url: `http://localhost:8008/profile/${userId}`,
 
         headers: {
           "Content-Type": "application/json",
@@ -34,10 +25,7 @@ export default function ProfilePicProvider({ children, setAuth }: any) {
         },
         withCredentials: true,
       });
-      // console.log(JSON.stringify(response));
-      // console.log(JSON.stringify(response.data));
-      // console.log(response.data[0].profilePic);
-      // console.log(response.data.profilePic);
+
       setProfilePic(response.data.profilePic);
     } catch (error) {
       console.error(error);

@@ -39,7 +39,6 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = (props) => {
       >
         {props.children}
       </AuthContext.Provider>
-      {/* <ProfilePicProvider></ProfilePicProvider> */}
     </>
   );
 };

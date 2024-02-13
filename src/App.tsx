@@ -38,7 +38,8 @@ function App() {
               <PrivateRoute path="/poopfeed" component={Poopfeed} />
               <PrivateRoute path="/register" component={SignUp} />
               {/* <PrivateRoute path="/profile/:username" component={ProfileCard} /> */}
-              <PrivateRoute path="/profile" component={ProfilePage} />
+              {/* <PrivateRoute path="/profile" component={ProfilePage} /> */}
+              <PrivateRoute path="/profile/:userId" component={GetProfile} />
 
               <Route path="/login" component={LogIn} />
               <Route path="/about" component={About} />
