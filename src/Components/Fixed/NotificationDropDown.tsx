@@ -65,8 +65,29 @@ const NotificationDropDown = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  //   width: "500px",
                 }}
               >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    // marginRight: "20px",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif", // Change this to your preferred font
+                      color: "green", // Change this to your preferred color
+                      textAlign: "left", // This will center the text horizontally
+                      fontSize: "13px",
+                    }}
+                  >
+                    FRIEND REQUEST:{" "}
+                  </p>
+                </div>
+
                 <div
                   style={{
                     display: "flex",
@@ -95,45 +116,82 @@ const NotificationDropDown = () => {
                       alt="Profile"
                     />
                   </div>
-                  <p>
+                  <p
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      color: "grey",
+                      textAlign: "center",
+                      fontSize: "12px",
+                    }}
+                  >
                     {profile.firstName} {profile.lastName}
                   </p>
                 </div>
-                <IconButton
-                  style={
-                    {
-                      // Add your custom styles here
-                    }
-                  }
-                  onClick={() => {
-                    // Add your custom button functionality here
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                  <CloseIcon />
+                  <IconButton
+                    aria-label="settings"
+                    sx={{
+                      color: "light-blue",
+                      "&:hover": {
+                        color: "blue",
+                      },
+                    }}
+                    onClick={() => {}}
+                  >
+                    <CheckIcon
+                      sx={{
+                        fontSize: "35px",
+                        "&:hover": {
+                          fontSize: "40px",
+                        },
+                      }}
+                    />
+                  </IconButton>
+                </div>
+                <IconButton
+                  aria-label="settings"
+                  sx={{
+                    color: "grey",
+                    "&:hover": {
+                      color: "green",
+                    },
+                  }}
+                  onClick={() => {}}
+                >
+                  <TextsmsIcon
+                    sx={{
+                      fontSize: "25px",
+                      "&:hover": {
+                        fontSize: "30px",
+                      },
+                    }}
+                  />
                 </IconButton>
                 <IconButton
-                  style={
-                    {
-                      // Add your custom styles here
-                    }
-                  }
-                  onClick={() => {
-                    // Add your custom button functionality here
+                  aria-label="settings"
+                  sx={{
+                    color: "red",
+
+                    "&:hover": {
+                      color: "red",
+                    },
                   }}
+                  onClick={() => {}}
                 >
-                  <CheckIcon />
-                </IconButton>
-                <IconButton
-                  style={
-                    {
-                      // Add your custom styles here
-                    }
-                  }
-                  onClick={() => {
-                    // Add your custom button functionality here
-                  }}
-                >
-                  <TextsmsIcon />
+                  <CloseIcon
+                    sx={{
+                      fontSize: "20px",
+                      "&:hover": {
+                        fontSize: "25px",
+                      },
+                    }}
+                  />
                 </IconButton>
               </div>,
               { toastId: profile.id }
@@ -169,7 +227,7 @@ const NotificationDropDown = () => {
         stacked
         position="top-right"
         theme="colored"
-        hideProgressBar={true}
+        // hideProgressBar={false}
       />
     </div>
   );

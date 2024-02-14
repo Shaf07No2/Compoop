@@ -45,11 +45,8 @@ export default function PoopCard({ post }: { post: ParsedUserPost }) {
     setExpanded(!expanded);
   };
 
-  // if (!post) {
-  //   return null;
-  // }
   return (
-    <Card sx={{ maxWidth: 345, marginTop: 3 }}>
+    <Card sx={{ maxWidth: "100%", marginTop: 3 }}>
       <CardHeader
         avatar={<Avatar src={post.profilePic} sx={{ bgcolor: orange[500] }} />}
         action={

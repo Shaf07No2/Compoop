@@ -16,6 +16,7 @@ function PoopCardContainer({ postPath }: pathPropType) {
         flexWrap="wrap"
         justifyContent="center"
         alignItems="center"
+        sx={{ flexDirection: "row" }}
       >
         <GetPost postPath={postPath}></GetPost>
       </Stack>
