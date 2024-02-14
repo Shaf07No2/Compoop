@@ -20,8 +20,9 @@ import Search from "@mui/icons-material/Search";
 import SearchComponent from "./SearchComponent";
 import { SearchBar } from "./SearchComponent";
 import { ProfilePicContext } from "./ProfilePicProvider";
+import NotificationDropDown from "./NotificationDropDown";
 
-const pages = ["profile", "poopfeed", "create"];
+const pages = ["testui", "poopfeed", "create"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -141,6 +142,7 @@ function NavBar() {
             ))}
           </Box>
           <SearchComponent />
+          <NotificationDropDown />
           <UserDropDown profilePic={profilePic.profilePic} />
         </Toolbar>
       </Container>

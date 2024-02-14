@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../Security/AuthContext";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 // import { ProfilePicContext } from "./ProfilePicProvider";
 // import { useContext } from "react";
 
@@ -18,8 +19,6 @@ function UserDropDown({ profilePic }: any) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  // console.log("userDrop down profile pic= " + profilePic);
-  // const { clearProfilePic } = React.useContext(ProfilePicContext);
 
   const authContext = React.useContext(AuthContext);
 
@@ -34,12 +33,25 @@ function UserDropDown({ profilePic }: any) {
   const history = useHistory();
   const location = useLocation();
 
+  const token = Cookies.get("auth");
+
+  let userId: any;
+
+  if (token) {
+    let claims = jwtDecode(token);
+    console.log(token);
+    claims && "userId" in claims
+      ? (userId = claims.userId)
+      : console.log("no user Id");
+  }
+
   const handleCloseUserMenu = (MenuItem: string) => {
     setAnchorElUser(null);
     if (MenuItem === "Logout") {
       authContext.logout();
-
       history.push("/login");
+    } else if (MenuItem === "Profile") {
+      history.push(`/profile/${userId}`);
     }
   };
 

@@ -104,6 +104,7 @@ export function SearchResults({ results }: { results: SearchResultFormat[] }) {
               {/* <Typography variant="body2" color="text.secondary">
                 {`Username: ${result.userName}`}
               </Typography> */}
+              <button> Add friend </button>
             </CardContent>
           </Card>
         </div>
