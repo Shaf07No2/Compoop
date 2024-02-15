@@ -46,7 +46,7 @@ export default function PoopCard({ post }: { post: ParsedUserPost }) {
   };
 
   return (
-    <Card sx={{ maxWidth: "100%", marginTop: 3 }}>
+    <Card sx={{ maxWidth: 385, marginTop: 3 }}>
       <CardHeader
         avatar={<Avatar src={post.profilePic} sx={{ bgcolor: orange[500] }} />}
         action={

@@ -22,7 +22,7 @@ import { SearchBar } from "./SearchComponent";
 import { ProfilePicContext } from "./ProfilePicProvider";
 import NotificationDropDown from "./NotificationDropDown";
 
-const pages = ["testui", "poopfeed", "create"];
+const pages = ["testui", "poopfeed", "create", "friends"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -42,7 +42,10 @@ function NavBar() {
   return (
     <AppBar
       position="sticky"
-      style={{ background: "#8A5050" }}
+      style={{
+        //  background: "#8A5050" ,
+        backgroundColor: "rgba(0,0,0,0.7)",
+      }}
       sx={{ overflow: "hidden" }}
     >
       <Container maxWidth="xl">
@@ -63,9 +66,12 @@ function NavBar() {
           >
             <Link
               to="/compoop"
-              style={{ color: "inherit", textDecoration: "none" }}
+              style={{
+                color: "rgba(227,231,222,0.60)",
+                textDecoration: "none",
+              }}
             >
-              ComPoop💩
+              FakeInstagram
             </Link>
           </Typography>
 

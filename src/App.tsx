@@ -20,6 +20,8 @@ import CreatePost from "./Components/Posting/CreatePost";
 import ProfilePicProvider from "./Components/Fixed/ProfilePicProvider";
 import ProfilePage from "./Pages/ProfilePage";
 import GetProfile from "./Components/Profiles/GetProfile";
+import Friends from "./Components/Social/Friends";
+import FriendPage from "./Pages/FriendPage";
 
 function App() {
   return (
@@ -37,14 +39,13 @@ function App() {
               <PrivateRoute path="/create" component={CreatePost} />
               <PrivateRoute path="/poopfeed" component={Poopfeed} />
               <PrivateRoute path="/register" component={SignUp} />
-              {/* <PrivateRoute path="/profile/:username" component={ProfileCard} /> */}
-              {/* <PrivateRoute path="/profile" component={ProfilePage} /> */}
               <PrivateRoute path="/profile/:userId" component={GetProfile} />
+              <PrivateRoute path="/friends" component={FriendPage} />
 
               <Route path="/login" component={LogIn} />
-              <Route path="/about" component={About} />
               <Route path="/signup" component={SignUp} />
               <Route path="/testui" component={TestUI} />
+
               <Redirect from="/" to="/Login" />
             </Switch>
           </BrowserRouter>

@@ -139,9 +139,7 @@ export default function ProfilePage({
                 <MDBCardBody className="text-black p-4">
                   <MDBRow>
                     <MDBCol className="mb-2">
-                      {/* <PoopCardContainer
-                        postPath={postPath}
-                      ></PoopCardContainer> */}
+                      <PoopCardContainer postPath={"user"}></PoopCardContainer>
                     </MDBCol>
                   </MDBRow>
                   {/* <div className="mb-5">
