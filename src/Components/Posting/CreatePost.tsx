@@ -2,26 +2,21 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { orange } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PublishIcon from "@mui/icons-material/Publish";
 
 import axios from "axios";
 import Cookies from "js-cookie";
 import Slide from "@mui/material/Slide";
 import Stack from "@mui/material/Stack";
-import { Form } from "react-hook-form";
 import { ProfilePicContext } from "../Fixed/ProfilePicProvider";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export interface PostCreation2 {
   title: string;
@@ -32,20 +27,17 @@ export interface PostCreation2 {
   };
 }
 
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+const notify = () => {
+  toast.success("🚀 Post Submitted!", {
+    position: "top-right",
+    autoClose: 3500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
 
 const CreatePost: React.FC = () => {
   const token = Cookies.get("auth");
@@ -105,7 +97,10 @@ const CreatePost: React.FC = () => {
 
     try {
       submitPost();
-      history.push("/profile");
+      // alert("Publish complete!");
+
+      notify();
+      history.push("/poopfeed");
     } catch (error: any) {
       console.log(error);
     }
@@ -120,62 +115,89 @@ const CreatePost: React.FC = () => {
           flexWrap="wrap"
           justifyContent="center"
           alignItems="center"
+          flexDirection="column"
         >
-          <Card sx={{ maxWidth: 345, marginTop: 3 }}>
+          <Card
+            sx={{
+              minWidth: 375,
+              maxWidth: 375,
+              marginTop: 2,
+              marginBottom: 2,
+              position: "relative",
+              borderRadius: "2%",
+              bgcolor: "rgba(0,0,0,0.50)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             <CardHeader
               avatar={
                 <Avatar
                   alt="user"
                   src={profilePic.profilePic}
-                  sx={{ bgcolor: orange[500] }}
+                  sx={{ bgcolor: orange[500], width: "60px", height: "60px" }}
                 />
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
               }
             />
 
             <form onSubmit={handleSubmit}>
-              <h2> Write your title </h2>
-              <CardHeader
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                title={
+              <CardContent sx={{}}>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  // sx={{ color: "blueviolet" }}
+                  sx={{
+                    color: "rgba(212,227,231,1)",
+                  }}
+                >
+                  Title:
+                </Typography>
+                <Typography>
                   <input
                     type="text"
                     id="title"
                     name="title"
                     value={postData.title}
                     onChange={handleChange}
+                    // style={{ width: "150%" }}
                   />
-                }
-              />
-
-              {/* <CardMedia
-              component="img"
-              height="194"
-              // src={post.picture}
-              alt="Paella dish"
-            /> */}
+                </Typography>
+              </CardContent>
               <CardContent>
-                <h3>Image source link</h3>
-                <Typography paragraph>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  // sx={{ color: "blueviolet" }}
+                  sx={{
+                    color: "rgba(212,227,231,1)",
+                  }}
+                >
+                  Image source-link:
+                </Typography>
+                <Typography>
                   <input
                     type="text"
                     id="picture"
                     name="picture"
                     value={postData.picture}
                     onChange={handleChange}
+                    style={{}}
                   />
                 </Typography>
               </CardContent>
               <CardContent>
-                <h3> Leave a description? </h3>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  // sx={{ color: "blueviolet" }}
+                  sx={{
+                    color: "rgba(212,227,231,1)",
+                  }}
+                >
+                  Description:
+                </Typography>
                 <Typography paragraph>
                   <input
                     type="text"
@@ -185,34 +207,29 @@ const CreatePost: React.FC = () => {
                     onChange={handleChange}
                   />
                 </Typography>
-              </CardContent>
-              {/* <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    top: 320, // Add this line
+                    left: 300,
+                    bgcolor: "rgba(240,240,240,0.5)",
+                    width: "90px",
+                    height: "90px",
+
+                    "&:hover": {
+                      bgcolor: "rgba(240,240,240,1)",
+                      top: 310, // Add this line
+                      left: 290,
+                      width: "100px",
+                      height: "100px",
+                    },
+                  }}
+                  type="submit"
                 >
-                  <ExpandMoreIcon />
-                </ExpandMore>
-              </CardActions> */}
-              {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <Typography paragraph>
-                    <textarea
-                      value={postData.description}
-                      onChange={handleChange}
-                    />
-                  </Typography>
-                </CardContent>
-              </Collapse> */}
-              <button type="submit">Submit Post</button>
+                  <PublishIcon />
+                </IconButton>
+              </CardContent>
+              {/* <button type="submit">Submit Post</button> */}
             </form>
           </Card>
         </Stack>

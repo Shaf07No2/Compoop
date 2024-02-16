@@ -12,13 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import UserDropDown from "./UserDropDown";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-
-import SearchIcon from "@mui/icons-material/Search";
-import Search from "@mui/icons-material/Search";
 import SearchComponent from "./SearchComponent";
-import { SearchBar } from "./SearchComponent";
 import { ProfilePicContext } from "./ProfilePicProvider";
 import NotificationDropDown from "./NotificationDropDown";
 
@@ -43,14 +37,12 @@ function NavBar() {
     <AppBar
       position="sticky"
       style={{
-        //  background: "#8A5050" ,
         backgroundColor: "rgba(0,0,0,0.7)",
       }}
       sx={{ overflow: "hidden" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -111,7 +103,7 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -128,7 +120,7 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            ComPoop
+            FakeInstagram
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

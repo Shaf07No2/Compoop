@@ -33,7 +33,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       userName: data.userName,
       profilePic: data.profilePic,
     };
-    console.log(params);
+
     if (data.password === data.cpassword) {
       console.log("matching passwords");
     }
@@ -45,7 +45,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
         data: params,
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
+
       toast.success(response.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -62,7 +62,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
       if (header instanceof AxiosHeaders) {
         token = header.get("Authorization") as string;
       }
-      console.log(token);
+
       if (token) {
         Cookies.set("auth", token, { expires: new Date(2147483647000) });
         localStorage.setItem(params.email, params.email);

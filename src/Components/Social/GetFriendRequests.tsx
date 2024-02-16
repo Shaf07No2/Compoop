@@ -37,7 +37,6 @@ export default function GetFriendRequests() {
       });
 
       setProfileData(response.data);
-      console.log("profiledata log: " + JSON.stringify(response.data));
     } catch (error) {
       console.error(error);
     }

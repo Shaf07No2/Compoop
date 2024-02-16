@@ -169,7 +169,6 @@ export function SearchBar({
 }
 
 export default function SearchComponent() {
-  console.log("rerendering");
   const [input, setInput] = React.useState("");
   // const [searchTerm, setSearchTerm] = React.useState("");
   const [results, setResults] = React.useState<SearchResultFormat[]>([]);
@@ -200,7 +199,6 @@ export default function SearchComponent() {
 
   React.useEffect(() => {
     if (input) {
-      console.log("sending request");
       axios
         .get(`http://localhost:8008/search/${input}`, {
           headers: {
@@ -222,8 +220,6 @@ export default function SearchComponent() {
               role: item.role,
             }))
           );
-
-          console.log(response.data);
         })
 
         .catch((error) => {

@@ -39,7 +39,6 @@ function UserDropDown({ profilePic }: any) {
 
   if (token) {
     let claims = jwtDecode(token);
-    console.log(token);
     claims && "userId" in claims
       ? (userId = claims.userId)
       : console.log("no user Id");

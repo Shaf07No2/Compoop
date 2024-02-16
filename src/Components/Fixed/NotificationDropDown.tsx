@@ -55,7 +55,6 @@ const NotificationDropDown = () => {
       });
 
       dispatch(setNotifications(response.data));
-      console.log("profiledata log: " + JSON.stringify(response.data));
       if (showNotifications) {
         response.data.forEach((profile: any) => {
           if (!toast.isActive(profile.id)) {
@@ -213,7 +212,7 @@ const NotificationDropDown = () => {
   };
 
   useEffect(() => {
-    fetchProfile(); // Fetches data when the component mounts
+    fetchProfile();
   }, [fetchProfile, showNotifications]);
 
   return (
@@ -227,7 +226,7 @@ const NotificationDropDown = () => {
         stacked
         position="top-right"
         theme="colored"
-        // hideProgressBar={false}
+        hideProgressBar={false}
       />
     </div>
   );

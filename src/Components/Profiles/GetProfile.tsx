@@ -23,22 +23,12 @@ interface ProfileData {
 export default function GetProfile() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   let token = Cookies.get("auth");
-  // let paramId = useParams();
-
-  // if (token) {
-  //   let claims = JWT(token);
-  //   console.log(token);
-  //   claims && "userId" in claims ? (userId = claims.userId) : (userId = "3");
-  //   console.log(userId);
-  // }
 
   interface params {
     userId: string;
   }
 
   let paramId: params = useParams();
-
-  console.log("params= " + paramId.userId);
 
   const fetchProfile = useCallback(async () => {
     try {
@@ -53,7 +43,6 @@ export default function GetProfile() {
       });
 
       setProfileData(response.data);
-      console.log("profiledata log: " + JSON.stringify(response.data));
     } catch (error) {
       console.error(error);
     }

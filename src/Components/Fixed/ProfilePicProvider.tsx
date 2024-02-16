@@ -37,7 +37,6 @@ export default function ProfilePicProvider({ children, setAuth }: any) {
       setProfilePic("");
       return;
     }
-    console.log("profilepic useEffect is running");
     fetchProfile();
   }, [fetchProfile, token, userId]);
 

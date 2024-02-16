@@ -1,7 +1,3 @@
-import { useState } from "react";
-import PoopCardFeed from "../Containers/PoopCardContainer";
-import NotificationDropDown from "../Fixed/NotificationDropDown";
-import SearchComponent from "../Fixed/SearchComponent";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
@@ -10,9 +6,10 @@ import axios from "axios";
 import React from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { CenterFocusStrong } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
 import { MDBCardText } from "mdb-react-ui-kit";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import IconButton from "@mui/material/IconButton";
 
 interface SearchResultFormat {
   id: number;
@@ -35,6 +32,10 @@ export default function Friends() {
     history.push(`/profile/${id}`);
   };
 
+  const friendIconClick = () => {
+    console.log("Unfriending attempt clicked");
+  };
+
   const token = Cookies.get("auth");
   let userId: any;
   if (token) {
@@ -43,7 +44,6 @@ export default function Friends() {
   }
 
   React.useEffect(() => {
-    console.log("sending request");
     axios
       .get(`http://localhost:8008/friends/${userId}`, {
         headers: {
@@ -65,8 +65,6 @@ export default function Friends() {
             role: item.role,
           }))
         );
-
-        console.log(response.data);
       })
 
       .catch((error) => {
@@ -86,7 +84,6 @@ export default function Friends() {
           //   event.preventDefault();
           //   event.stopPropagation();
           // }}
-          onClick={() => handleClick(`${result.id}`)}
         >
           <Card
             sx={{
@@ -94,13 +91,43 @@ export default function Friends() {
               maxWidth: 200,
               minLength: 240,
               marginTop: 1,
-              borderRadius: "20%",
+              position: "relative",
+              borderRadius: "15%",
               bgcolor: "rgba(0,0,0,0.50)",
               "&:hover": {
                 bgcolor: "rgba(0,0,0,0.58)",
               },
             }}
           >
+            <IconButton
+              aria-label="settings"
+              sx={{
+                color: "rgba(87, 116, 230, 0.9)",
+                display: "flex",
+                position: "absolute",
+                top: 0, // Add this line
+                left: 140,
+                flexDirection: "column",
+                marginLeft: "10px",
+                marginTop: "10px",
+                "&:hover": {
+                  color: "red",
+                },
+              }}
+              onClick={(friendIconClick) => {
+                alert("Sure you want to unfriend?");
+              }}
+            >
+              <HowToRegIcon
+                sx={{
+                  fontSize: "25px",
+                  marginBottom: "0px",
+                  "&:hover": {
+                    fontSize: "30px",
+                  },
+                }}
+              />
+            </IconButton>
             <CardContent
               sx={{
                 display: "flex",
@@ -108,6 +135,7 @@ export default function Friends() {
                 alignItems: "center",
                 flexDirection: "column",
               }}
+              onClick={() => handleClick(`${result.id}`)}
             >
               <Avatar
                 alt={result.userName}

@@ -1,7 +1,5 @@
 import Stack from "@mui/material/Stack";
 import Slide from "@mui/material/Slide";
-import UserPost from "../Posting/GetPost";
-import GetPost from "../Posting/GetPost";
 import Friends from "../Social/Friends";
 
 export interface pathPropType {

@@ -11,16 +11,15 @@ import AuthContextProvider from "./Components/Security/AuthContext";
 import Poopfeed from "./Pages/Poopfeed";
 import SignUp from "./Components/SigningInOut/Signup";
 import Background from "./Components/Fixed/background";
-import About from "./Pages/About";
+
 import ComPoop from "./Pages/Compoop";
-// import ProfileCard from "./Components/ProfileCardpossiblyunused";
-// import ProfilePage from "./Components/GetProfile";
+
 import TestUI from "./Pages/TestUI";
 import CreatePost from "./Components/Posting/CreatePost";
 import ProfilePicProvider from "./Components/Fixed/ProfilePicProvider";
-import ProfilePage from "./Pages/ProfilePage";
+
 import GetProfile from "./Components/Profiles/GetProfile";
-import Friends from "./Components/Social/Friends";
+
 import FriendPage from "./Pages/FriendPage";
 
 function App() {

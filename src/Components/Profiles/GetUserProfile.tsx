@@ -34,14 +34,12 @@ export default function GetUserProfile() {
       });
 
       setProfileData(response.data);
-      // console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   }, [token]);
 
   useEffect(() => {
-    // console.log("useEffect is running");
     fetchProfile();
   }, [fetchProfile]);
 

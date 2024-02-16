@@ -30,11 +30,8 @@ export default function GetPost({ postPath }: pathPropType) {
   const userId = localStorage.getItem("userId");
   const url = `http://localhost:8008/${postPath}/${userId}`;
 
-  // console.log(postPath as string);
   const fetchProfile = React.useCallback(async () => {
     try {
-      // console.log("fetchProfile is being called");
-      // console.log(`http://localhost:8008/${postPath}/${userId}`);
       const response = await axios({
         method: "get",
         url: `http://localhost:8008/${postPath}/${userId}`,
@@ -63,7 +60,6 @@ export default function GetPost({ postPath }: pathPropType) {
   }, [token, userId, postPath]);
 
   React.useEffect(() => {
-    // console.log("useEffect is running");
     fetchProfile();
   }, [fetchProfile]);
 
