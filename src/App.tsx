@@ -8,11 +8,11 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import PrivateRoute from "./Components/Security/privateRoute";
 import LogIn from "./Components/SigningInOut/LogIn";
 import AuthContextProvider from "./Components/Security/AuthContext";
-import Poopfeed from "./Pages/Poopfeed";
+import Feed from "./Pages/Feed";
 import SignUp from "./Components/SigningInOut/Signup";
 import Background from "./Components/Fixed/background";
 
-import ComPoop from "./Pages/Compoop";
+import FakeInsta from "./Pages/Compoop";
 
 import TestUI from "./Pages/TestUI";
 import CreatePost from "./Components/Posting/CreatePost";
@@ -34,9 +34,9 @@ function App() {
 
             <Switch>
               <PrivateRoute path="/home" component={Home} />
-              <PrivateRoute path="/compoop" component={ComPoop} />
+              <PrivateRoute path="/fakeinsta" component={FakeInsta} />
               <PrivateRoute path="/create" component={CreatePost} />
-              <PrivateRoute path="/poopfeed" component={Poopfeed} />
+              <PrivateRoute path="/feed" component={Feed} />
               <PrivateRoute path="/register" component={SignUp} />
               <PrivateRoute path="/profile/:userId" component={GetProfile} />
               <PrivateRoute path="/friends" component={FriendPage} />

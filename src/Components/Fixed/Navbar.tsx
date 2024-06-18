@@ -16,7 +16,7 @@ import SearchComponent from "./SearchComponent";
 import { ProfilePicContext } from "./ProfilePicProvider";
 import NotificationDropDown from "./NotificationDropDown";
 
-const pages = ["testui", "poopfeed", "create", "friends"];
+const pages = ["testui", "feed", "create", "friends"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -57,7 +57,7 @@ function NavBar() {
             }}
           >
             <Link
-              to="/compoop"
+              to="/fakeinsta"
               style={{
                 color: "rgba(227,231,222,0.60)",
                 textDecoration: "none",

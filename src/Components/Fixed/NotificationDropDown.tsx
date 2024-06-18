@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -34,14 +34,42 @@ type notificationData = {
   profilePic: string;
 };
 
+async function acceptFriendRequest(requesterUserId: string) {
+  let token = Cookies.get("auth");
+  try {
+    await axios({
+      method: "post",
+      url: `http://localhost:8008/acceptrequest/${requesterUserId}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      withCredentials: true,
+    });
+    const acceptIcon = document.getElementById(
+      "accept-request-" + requesterUserId
+    );
+    const rejectIcon = document.getElementById(
+      "reject-request-" + requesterUserId
+    );
+    if (acceptIcon) {
+      acceptIcon.style.display = "none"; // Hides the icon
+      rejectIcon!.style.display = "none";
+    }
+    toast.dismiss(requesterUserId);
+    console.log("request accepted");
+  } catch (error) {
+    toast.dismiss(requesterUserId);
+    console.error(error);
+  }
+}
+
 const NotificationDropDown = () => {
   const [showNotifications, setShowNotifications] = useState(false);
 
   const dispatch = useDispatch();
   const notifications = useSelector((state: RootState) => state.notifications);
-
   let token = Cookies.get("auth");
-
   const fetchProfile = useCallback(async () => {
     try {
       const response = await axios({
@@ -53,6 +81,7 @@ const NotificationDropDown = () => {
         },
         withCredentials: true,
       });
+      console.log("request sent for friend requests" + response);
 
       dispatch(setNotifications(response.data));
       if (showNotifications) {
@@ -134,6 +163,7 @@ const NotificationDropDown = () => {
                   }}
                 >
                   <IconButton
+                    id={`accept-request-` + profile.id}
                     aria-label="settings"
                     sx={{
                       color: "light-blue",
@@ -141,7 +171,7 @@ const NotificationDropDown = () => {
                         color: "blue",
                       },
                     }}
-                    onClick={() => {}}
+                    onClick={() => acceptFriendRequest(`${profile.id}`)}
                   >
                     <CheckIcon
                       sx={{
@@ -173,6 +203,7 @@ const NotificationDropDown = () => {
                   />
                 </IconButton>
                 <IconButton
+                  id={`reject-request-` + profile.id}
                   aria-label="settings"
                   sx={{
                     color: "red",
@@ -206,13 +237,16 @@ const NotificationDropDown = () => {
   const handleButtonClick = async () => {
     const newShowNotifications = !showNotifications;
     setShowNotifications(newShowNotifications);
-    if (!newShowNotifications) {
+    if (newShowNotifications) {
+      // fetch profile when notifications are shown
       await fetchProfile();
     }
   };
 
   useEffect(() => {
-    fetchProfile();
+    if (showNotifications) {
+      fetchProfile();
+    }
   }, [fetchProfile, showNotifications]);
 
   return (

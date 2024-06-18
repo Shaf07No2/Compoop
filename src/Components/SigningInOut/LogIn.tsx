@@ -30,8 +30,8 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="/poopfeed">
-        ComPoop Industries
+      <Link color="inherit" href="/feed">
+        FakeInsta Industries
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -84,7 +84,7 @@ export default function LogIn() {
           : console.log("UserID not found");
         localStorage.setItem("userId", userId);
         setAuth(true);
-        history.push("/poopfeed");
+        history.push("/feed");
       }
       clearProfilePic();
     } catch (error) {

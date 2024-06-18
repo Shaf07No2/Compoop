@@ -4,7 +4,7 @@ function Home() {
   return (
     <>
       <div className="Pagefiller">
-        <h1> Welcome to ComPoop! </h1>
+        <h1> Welcome to FakeInsta! </h1>
       </div>
     </>
   );

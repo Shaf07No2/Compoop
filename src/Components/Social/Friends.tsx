@@ -22,25 +22,50 @@ interface SearchResultFormat {
   role: string;
 }
 
+async function deleteFriend(friendId: string) {
+  const token = Cookies.get("auth");
+  try {
+    await axios({
+      method: "delete",
+      url: `http://localhost:8008/friendremove/${friendId}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      withCredentials: true,
+    });
+    const unfriendButton = document.getElementById("unfriend-" + friendId);
+    if (unfriendButton) {
+      unfriendButton.style.display = "none";
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function Friends() {
   const [results, setResults] = React.useState<SearchResultFormat[]>([]);
 
   const history = useHistory();
+
+  const token = Cookies.get("auth");
 
   const handleClick = (id: string) => {
     console.log("Profile clicked");
     history.push(`/profile/${id}`);
   };
 
-  const friendIconClick = () => {
-    console.log("Unfriending attempt clicked");
+  const handleUnfriendClick = (friendId: string) => {
+    deleteFriend(friendId);
+    // setResults((prevResults) =>
+    //   prevResults.filter((friend) => friend.id.toString() !== friendId)
+    // );
   };
 
-  const token = Cookies.get("auth");
   let userId: any;
   if (token) {
     let claims = jwtDecode(token);
-    claims && "userId" in claims ? (userId = claims.userId) : (userId = "3");
+    claims && "userId" in claims ? (userId = claims.userId) : (userId = "");
   }
 
   React.useEffect(() => {
@@ -76,14 +101,8 @@ export default function Friends() {
     <>
       {results.map((result: SearchResultFormat) => (
         <div
-          // to={`/profile/${result.id}`}
-          // to={`/compoop`}
           key={result.id}
           style={{ textDecoration: "none", color: "inherit" }}
-          // onClick={(event: any) => {
-          //   event.preventDefault();
-          //   event.stopPropagation();
-          // }}
         >
           <Card
             sx={{
@@ -100,12 +119,13 @@ export default function Friends() {
             }}
           >
             <IconButton
+              id={"unfriend-" + result.id.toString()}
               aria-label="settings"
               sx={{
                 color: "rgba(87, 116, 230, 0.9)",
                 display: "flex",
                 position: "absolute",
-                top: 0, // Add this line
+                top: 0,
                 left: 140,
                 flexDirection: "column",
                 marginLeft: "10px",
@@ -114,8 +134,8 @@ export default function Friends() {
                   color: "red",
                 },
               }}
-              onClick={(friendIconClick) => {
-                alert("Sure you want to unfriend?");
+              onClick={() => {
+                handleUnfriendClick(`${result.id.toString()}`);
               }}
             >
               <HowToRegIcon

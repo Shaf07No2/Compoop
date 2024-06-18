@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import * as React from "react";
 import PoopCard from "../Cards/PoopCard";
 import { pathPropType } from "../Containers/PoopCardContainer";
+import { useParams } from "react-router-dom";
 
 export interface UserPostInterface {
   id: number;
@@ -27,8 +28,18 @@ export interface ParsedUserPost {
 export default function GetPost({ postPath }: pathPropType) {
   const [profileData, setProfileData] = React.useState<UserPostInterface[]>([]);
   const token = Cookies.get("auth");
-  const userId = localStorage.getItem("userId");
-  const url = `http://localhost:8008/${postPath}/${userId}`;
+  // const userId = localStorage.getItem("userId");
+  interface params {
+    userId: string;
+  }
+
+  let paramId: params = useParams();
+
+  let userId: string;
+
+  postPath === "user"
+    ? (userId = paramId.userId)
+    : (userId = localStorage.getItem("userId")!);
 
   const fetchProfile = React.useCallback(async () => {
     try {

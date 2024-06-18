@@ -75,7 +75,7 @@ const SignUp: FC<SomeComponentProps> = ({ history }) => {
         setAuth(true);
         reset();
         setTimeout(() => {
-          history.push("/poopfeed");
+          history.push("/feed");
         }, 1000);
       }
     } catch (error: any) {

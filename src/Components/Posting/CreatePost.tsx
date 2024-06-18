@@ -97,10 +97,9 @@ const CreatePost: React.FC = () => {
 
     try {
       submitPost();
-      // alert("Publish complete!");
 
       notify();
-      history.push("/poopfeed");
+      history.push("/feed");
     } catch (error: any) {
       console.log(error);
     }

@@ -24,7 +24,6 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = (props) => {
 
   const logout = () => {
     Cookies.remove("auth");
-
     setIsAuthenticated(false);
   };
 

@@ -1,12 +1,12 @@
 import "./Pagefiller.css";
 
-function ComPoop() {
+function FakeInsta() {
   return (
     <>
       <div className="Pagefiller">
-        <h2> Welcome to ComPoop! </h2>
+        <h2> Welcome to FakeInsta! </h2>
       </div>
     </>
   );
 }
-export default ComPoop;
+export default FakeInsta;

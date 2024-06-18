@@ -1,6 +1,6 @@
 import PoopCardContainer from "../Components/Containers/PoopCardContainer";
 
-function Poopfeed() {
+function Feed() {
   return (
     <>
       <div>
@@ -9,4 +9,4 @@ function Poopfeed() {
     </>
   );
 }
-export default Poopfeed;
+export default Feed;
